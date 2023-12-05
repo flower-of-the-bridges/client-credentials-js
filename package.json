@@ -1,6 +1,6 @@
 {
   "name": "client-credentials-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Client credentials OAuth2.0 flow written in plain Javascript.",
   "main": "index.js",
   "type": "commonjs",
@@ -23,7 +23,7 @@
     "standard": "^17.1.0",
     "tap": "^18.6.1"
   },
-  "engines" : {
-    "node" : ">=16.0.0"
+  "engines": {
+    "node": ">=16.0.0"
   }
 }
