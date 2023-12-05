@@ -1,5 +1,5 @@
 {
-  "name": "client-credentials",
+  "name": "client-credentials-js",
   "version": "1.0.0",
   "description": "Client credentials OAuth2.0 flow written in plain Javascript.",
   "main": "index.js",
