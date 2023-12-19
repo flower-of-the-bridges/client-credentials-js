@@ -34,7 +34,6 @@ class ClientCredentials {
 
   /**
    *
-   * @param {unknown} scope
    * @returns {Promise<Token>}
    */
   async getToken () {
@@ -42,7 +41,7 @@ class ClientCredentials {
       grant_type: 'client_credentials',
       client_id: this.client.id,
       client_secret: this.client.secret,
-      ...this.client.scope
+      scope: this.client.scope
     })
     this.token = new Token(oauthToken)
     return this.token

@@ -16,7 +16,8 @@ t.test('client-credentials', async t => {
   const clientCredentials = new ClientCredentials({
     client: {
       id: MOCK_CONFIG.CLIENT_ID,
-      secret: MOCK_CONFIG.CLIENT_SECRET
+      secret: MOCK_CONFIG.CLIENT_SECRET,
+      scope: MOCK_CONFIG.SCOPE
     },
     auth: {
       authorizePath: MOCK_CONFIG.AUTHORIZE_PATH,
@@ -36,7 +37,13 @@ t.test('client-credentials', async t => {
       access_token: 'my-token'
     }
     const scope = t.nock(MOCK_CONFIG.HOST)
-      .post(MOCK_CONFIG.AUTHORIZE_PATH)
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
+      .post(MOCK_CONFIG.AUTHORIZE_PATH, {
+        grant_type: 'client_credentials',
+        client_id: MOCK_CONFIG.CLIENT_ID,
+        client_secret: MOCK_CONFIG.CLIENT_SECRET,
+        scope: MOCK_CONFIG.SCOPE
+      })
       .times(2)
       .reply(200, mockToken)
     const token = await clientCredentials.getToken(TEST_SCOPE)
@@ -61,7 +68,13 @@ t.test('client-credentials', async t => {
       message: 'error'
     }
     const scope = t.nock(MOCK_CONFIG.HOST)
-      .post(MOCK_CONFIG.AUTHORIZE_PATH)
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
+      .post(MOCK_CONFIG.AUTHORIZE_PATH, {
+        grant_type: 'client_credentials',
+        client_id: MOCK_CONFIG.CLIENT_ID,
+        client_secret: MOCK_CONFIG.CLIENT_SECRET,
+        scope: MOCK_CONFIG.SCOPE
+      })
       .reply(403, mockError)
     try {
       await clientCredentials.getToken(TEST_SCOPE)
@@ -75,7 +88,13 @@ t.test('client-credentials', async t => {
 
   t.test('get token returns empty if response is empty', async t => {
     const scope = t.nock(MOCK_CONFIG.HOST)
-      .post(MOCK_CONFIG.AUTHORIZE_PATH)
+      .matchHeader('Content-Type', 'application/x-www-form-urlencoded')
+      .post(MOCK_CONFIG.AUTHORIZE_PATH, {
+        grant_type: 'client_credentials',
+        client_id: MOCK_CONFIG.CLIENT_ID,
+        client_secret: MOCK_CONFIG.CLIENT_SECRET,
+        scope: MOCK_CONFIG.SCOPE
+      })
       .reply(500)
     try {
       await clientCredentials.getToken(TEST_SCOPE)
